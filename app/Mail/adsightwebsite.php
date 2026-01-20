@@ -23,12 +23,9 @@ class adsightwebsite extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($name, $company, $email, $phone, $website)
+    public function __construct($email, $website)
     {
-        $this ->name = $name;
-        $this ->company = $company;
         $this ->email = $email;
-        $this ->phone = $phone;
         $this ->website = $website;
     }
 
@@ -51,10 +48,7 @@ class adsightwebsite extends Mailable
         return new Content(
             view: 'mail.adsightwebsite',
             with: [
-                'name' => $this->name,
-                'company' => $this->company,
                 'email' => $this->email,
-                'phone' => $this->phone,
                 'website' => $this->website,
             ],
         );

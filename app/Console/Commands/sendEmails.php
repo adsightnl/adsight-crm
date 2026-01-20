@@ -23,7 +23,7 @@ class sendEmails extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send emails to leads based on their templates';
 
     /**
      * Execute the console command.
@@ -39,19 +39,13 @@ class sendEmails extends Command
                 if($template -> template == 'adsightwebsite'){
                     //send email
                     \Mail::to($lead->email)->send(new adsightwebsite(
-                        $lead->name,
-                        $lead->company,
                         $lead->email,
-                        $lead->phone,
                         $lead->website
                     ));
                 }elseif($template -> template == 'adsightcompany'){
                     //send email
                     \Mail::to($lead->email)->send(new adsightcompany(
-                        $lead->name,
-                        $lead->company,
                         $lead->email,
-                        $lead->phone,
                         $lead->website
                     ));
                 }
