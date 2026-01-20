@@ -13,10 +13,7 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('company')->nullable();
             $table->string('email')->unique();
-            $table->string('phone')->nullable();
             $table->string('website')->nullable();
             $table->enum('status', ['new', 'contacted', 'qualified', 'lost'])->default('new');
             $table->unsignedBigInteger('template_id')->nullable();
