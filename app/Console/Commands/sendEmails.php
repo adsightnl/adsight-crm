@@ -34,7 +34,6 @@ class sendEmails extends Command
         //fetch leads without sent email
         $leads = Leads::whereNull('email_send')->where('email', '!=', '')->get();
         foreach ($leads as $lead) {
-            dd($lead);
             //fetch template
             $template = Templates::find($lead->template_id);
             if ($template) {
