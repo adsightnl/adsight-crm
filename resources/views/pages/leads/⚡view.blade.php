@@ -6,7 +6,7 @@ new class extends Component
 {
     public $email;
     public $website;
-    public $template;
+    public $status;
     public $notes;
 
     public function mount($id)
@@ -14,7 +14,7 @@ new class extends Component
         $lead = \App\Models\Leads::find($id);
         $this->email = $lead->email;
         $this->website = $lead->website;
-        $this->template = $lead->template_id;
+        $this -> status = $lead->status;
         $this->notes = $lead->notes;
     }
 
@@ -23,7 +23,7 @@ new class extends Component
         $this->validate([
             'email' => 'required|email',
             'website' => 'max:255|required',
-            'template' => 'nullable|exists:templates,id',
+            'status' => 'required|in:new,contacted,qualified,lost',
             'notes' => 'nullable|string',
         ]);
 
@@ -31,7 +31,7 @@ new class extends Component
         $lead->update([
             'email' => $this->email,
             'website' => $this->website,
-            'template_id' => $this->template,
+            'status' => $this->status,
             'notes' => $this->notes,
         ]);
 
