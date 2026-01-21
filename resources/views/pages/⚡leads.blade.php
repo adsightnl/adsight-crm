@@ -7,7 +7,7 @@ new class extends Component
 {
 
     public $sortBy = 'created_at';
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
     public $page = 0;
 
     public $email;

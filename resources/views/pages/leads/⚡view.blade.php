@@ -8,13 +8,16 @@ new class extends Component
     public $website;
     public $status;
     public $notes;
+    public $lead;
 
     public function mount($id)
     {
         $lead = \App\Models\Leads::find($id);
+        $this -> lead = $lead;
         $this->email = $lead->email;
         $this->website = $lead->website;
         $this -> status = $lead->status;
+        //dd($this->status);
         $this->notes = $lead->notes;
     }
 
@@ -27,8 +30,7 @@ new class extends Component
             'notes' => 'nullable|string',
         ]);
 
-        $lead = \App\Models\Leads::where('email', $this->email)->first();
-        $lead->update([
+        $this -> lead->update([
             'email' => $this->email,
             'website' => $this->website,
             'status' => $this->status,
