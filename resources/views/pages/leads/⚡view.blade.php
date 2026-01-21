@@ -22,7 +22,7 @@ new class extends Component
     {
         $this->validate([
             'email' => 'required|email',
-            'website' => 'url|max:255|required',
+            'website' => 'max:255|required',
             'template' => 'nullable|exists:templates,id',
             'notes' => 'nullable|string',
         ]);
