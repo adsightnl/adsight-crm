@@ -50,6 +50,7 @@ class sendEmails extends Command
                     ));
                 }
                 $lead->email_send = now();
+                $lead->status = 'contacted';
                 $lead->save();
             }
         }
