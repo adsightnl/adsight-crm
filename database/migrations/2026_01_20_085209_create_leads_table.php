@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('leads', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('website')->nullable();
-            $table->enum('status', ['new', 'contacted', 'qualified', 'lost'])->default('new');
+            $table->string('email')->unique()->nullable();
+            $table->string('website');
+            $table->enum('status', ['new', 'contacted', 'qualified', 'lost', 'broken', 'inactive','traffic'])->default('new');
             $table->unsignedBigInteger('template_id')->nullable();
             $table->datetime('email_send')->nullable();
             $table->text('notes')->nullable();

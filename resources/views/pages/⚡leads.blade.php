@@ -6,8 +6,8 @@ use Flux\Flux;
 new class extends Component
 {
 
-    public $sortBy = 'created_at';
-    public $sortDirection = 'desc';
+    public $sortBy = 'email_send';
+    public $sortDirection = 'asc';
     public $page = 0;
 
     public $email;
@@ -43,11 +43,20 @@ new class extends Component
         $this->page--;
     }
 
+     public function sort($column) {
+        if ($this->sortBy === $column) {
+            $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            $this->sortBy = $column;
+            $this->sortDirection = 'asc';
+        }
+    }
+
     public function createLead(){
 
         $this->validate([
             'email' => 'required|email|unique:leads,email',
-            'website' => 'nullable|max:255',
+            'website' => 'required|max:255|url',
             'template_id' => 'nullable|exists:templates,id',
             'notes' => 'nullable|string',
         ]);
@@ -71,10 +80,10 @@ new class extends Component
     <flux:table class="w-full" :paginate="$this->leads">
         <flux:table.columns>
             <flux:table.row>
-                <flux:table.column>{{ __('Email') }}</flux:table.column>
-                <flux:table.column>{{ __('Website') }}</flux:table.column>
-                <flux:table.column>{{ __('Status') }}</flux:table.column>
-                <flux:table.column>{{ __('Email send') }}</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'email'" :direction="$sortDirection" wire:click="sort('email')">{{ __('Email') }} </flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'website'" :direction="$sortDirection" wire:click="sort('website')">{{ __('Website') }}</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'status'" :direction="$sortDirection" wire:click="sort('status')">{{ __('Status') }}</flux:table.column>
+                <flux:table.column sortable :sorted="$sortBy === 'email_send'" :direction="$sortDirection" wire:click="sort('email_send')">{{ __('Email send') }}</flux:table.column>
                 <flux:table.column></flux:table.column>
             </flux:table.row>
         </flux:table.columns>
