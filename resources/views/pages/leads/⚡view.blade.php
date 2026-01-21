@@ -56,8 +56,8 @@ new class extends Component
             <flux:select.option value="new">{{ __('New') }}</flux:select.option>
             <flux:select.option value="traffic">{{ __('Low Traffic') }}</flux:select.option>
             <flux:select.option value="broken">{{ __('Broken') }}</flux:select.option>
-            <flux:select.option value="inactive">{{ __('Inactive') }}</flux:select.option>
-            <flux:select.option value="lost">{{ __('No interest / Not eligible') }}</flux:select.option>
+            <flux:select.option value="inactive">{{ __('Inactive /  Not eligible') }}</flux:select.option>
+            <flux:select.option value="lost">{{ __('No interest) }}</flux:select.option>
             <flux:select.option value="contacted">{{ __('Contacted') }}</flux:select.option>
             <flux:select.option value="qualified">{{ __('Interested') }}</flux:select.option>
 
