@@ -32,7 +32,7 @@ class sendEmails extends Command
     public function handle()
     {
         //fetch leads without sent email
-        $leads = Leads::whereNull('email_send')->whereNotNull('email')->get();
+        $leads = Leads::whereNull('email_send')->where('email', '!=', '')->get();
         foreach ($leads as $lead) {
             dd($lead);
             //fetch template
