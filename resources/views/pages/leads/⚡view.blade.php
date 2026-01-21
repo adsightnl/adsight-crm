@@ -43,7 +43,7 @@ new class extends Component
 
 <div>
     <flux:toast />
-    <flux:heading size="xl" class="mt-8">{{ __('Lead :company / :website', ['company' => $this->company, 'website' => str_replace(['https://', 'http://'], '', $this->website)]) }}</flux:heading>
+    <flux:heading size="xl" class="mt-8">{{ __('Lead :website', ['website' => str_replace(['https://', 'http://'], '', $this->website)]) }}</flux:heading>
     <flux:separator class="mb-4" />
     <form wire:submit.prevent="updateLead">
         <flux:input wire:model="email" label="{{ __('Email') }}" class="mb-4" required />
