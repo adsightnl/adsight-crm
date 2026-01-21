@@ -15,11 +15,17 @@
                     <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="home" :href="route('process')" :current="request()->routeIs('process')" wire:navigate>
+                        {{ __('Process Leads') }}
+                    </flux:sidebar.item>
                     <flux:sidebar.item icon="home" :href="route('leads')" :current="request()->routeIs('leads')" wire:navigate>
                         {{ __('Leads') }}
                     </flux:sidebar.item>
                     <flux:sidebar.item icon="home" :href="route('templates')" :current="request()->routeIs('templates')" wire:navigate>
                         {{ __('Templates') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="home" :href="route('import')" :current="request()->routeIs('import')" wire:navigate>
+                        {{ __('Import') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>

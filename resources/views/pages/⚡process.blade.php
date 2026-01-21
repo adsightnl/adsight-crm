@@ -6,7 +6,7 @@ use Flux\Flux;
 new class extends Component
 {
 
-    public $sortBy = 'created_at';
+    public $sortBy = 'email_send';
     public $sortDirection = 'asc';
     public $page = 0;
 
@@ -26,7 +26,7 @@ new class extends Component
     #[\Livewire\Attributes\Computed]
     public function leads()
     {
-        return \App\Models\Leads::orderBy($this->sortBy, $this->sortDirection)
+        return \App\Models\Leads::where('status', 'new')->whereNull('email_send')->orderBy($this->sortBy, $this->sortDirection)
             ->paginate(20, ['*'], 'page', $this->page);
     }
 
@@ -50,26 +50,6 @@ new class extends Component
             $this->sortBy = $column;
             $this->sortDirection = 'asc';
         }
-    }
-
-    public function createLead(){
-
-        $this->validate([
-            'email' => 'required|email|unique:leads,email',
-            'website' => 'required|max:255|url',
-            'template_id' => 'nullable|exists:templates,id',
-            'notes' => 'nullable|string',
-        ]);
-
-        \App\Models\Leads::create([
-            'email' => $this->email,
-            'website' => $this->website,
-            'template_id' => $this->template_id,
-            'notes' => $this->notes,
-        ]);
-
-        $this->reset(['email', 'website', 'template_id', 'notes']);
-        Flux::toast('New lead has been created.');
     }
 }
 ?>
@@ -103,19 +83,5 @@ new class extends Component
             @endforeach
          </flux:table.rows>
     </flux:table>
-
-    <flux:heading size="xl" class="mt-8">{{ __('Add new lead') }}</flux:heading>
-    <flux:separator class="mb-4" />
-    <form wire:submit.prevent="createLead">
-        <flux:input wire:model="email" label="{{ __('Email') }}" class="mb-4" required />
-        <flux:input wire:model="website" label="{{ __('Website') }}" class="mb-4" required />
-        <flux:select wire:model="template_id" label="{{ __('Template') }}" class="mb-4">
-            @foreach($this->templates as $temp)
-                <flux:select.option :value="$temp->id">{{ $temp->name }}</flux:select.option>
-            @endforeach
-        </flux:select>
-        <flux:textarea wire:model="notes" label="{{ __('Notes') }}" class="mb-4" />
-        <flux:button type="submit" variant="primary">{{ __('Create Lead') }}</flux:button>
-    </form>
     <flux:toast />
 </div>

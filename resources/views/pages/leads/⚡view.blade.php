@@ -21,7 +21,7 @@ new class extends Component
     public function updateLead()
     {
         $this->validate([
-            'email' => 'required|email',
+            'email' => 'nullable|email',
             'website' => 'max:255|required|url',
             'status' => 'required|in:new,broken,inactive,contacted,qualified,lost,traffic',
             'notes' => 'nullable|string',
@@ -48,7 +48,7 @@ new class extends Component
     <form wire:submit.prevent="updateLead">
         <flux:button href="{{ $website }}" variant="primary" class="mb-6" target="_blank">Open Website</flux:button>
 
-        <flux:input wire:model="email" label="{{ __('Email') }}" class="mb-4" required />
+        <flux:input wire:model="email" label="{{ __('Email') }}" class="mb-4" />
         <flux:input wire:model="website" label="{{ __('Website') }}" class="mb-4" required />
         <flux:select wire:model="status" label="{{ __('Status')}}" class="mb-4" required>
             <flux:select.option value="new">{{ __('New') }}</flux:select.option>

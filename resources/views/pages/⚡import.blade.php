@@ -35,6 +35,7 @@ new class extends Component
                 fclose($handle);
             }
         }
+        Flux::toast('Import completed successfully.');
     }
 };
 ?>

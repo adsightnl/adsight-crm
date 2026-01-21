@@ -15,5 +15,6 @@ Route::livewire('template/edit/{id}', 'pages::template.edit')->name('templates.e
 Route::livewire('leads', 'pages::leads')->name('leads');
 Route::livewire('leads/view/{id}', 'pages::leads.view')->name('leads.view');
 Route::livewire('import', 'pages::import')->name('import');
+Route::livewire('process', 'pages::process')->name('process');
 
 require __DIR__.'/settings.php';
