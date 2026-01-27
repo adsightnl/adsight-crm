@@ -15,6 +15,8 @@ new class extends Component
     public $template_id = 1;
     public $notes;
 
+    public $status;
+    public $selectedLeads = [];
     //list of templates for select
     public $templates;
 
@@ -43,6 +45,22 @@ new class extends Component
         $this->page--;
     }
 
+    public function submit(){
+        //foreach selected leads, update status
+        foreach($this->selectedLeads as $leadId){
+            $lead = \App\Models\Leads::find($leadId);
+            $lead->update([
+                'status' => $this->status,
+            ]);
+        }
+        //reset selected leads
+        $this->selectedLeads = [];
+        Flux::toast('Leads have been updated.');
+        //reload page
+        $this->page = 0;
+
+    }
+
      public function sort($column) {
         if ($this->sortBy === $column) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -56,10 +74,11 @@ new class extends Component
 <div>
     <flux:heading size="xl" class="mt-8">{{ __('Leads') }}</flux:heading>
     <flux:separator class="mb-4" />
-
+    <form wire:submit.prevent="submit">
     <flux:table class="w-full" :paginate="$this->leads">
         <flux:table.columns>
             <flux:table.row>
+                <flux:table.column></flux:table.column>
                 <flux:table.column sortable :sorted="$sortBy === 'email'" :direction="$sortDirection" wire:click="sort('email')">{{ __('Email') }} </flux:table.column>
                 <flux:table.column sortable :sorted="$sortBy === 'website'" :direction="$sortDirection" wire:click="sort('website')">{{ __('Website') }}</flux:table.column>
                 <flux:table.column sortable :sorted="$sortBy === 'status'" :direction="$sortDirection" wire:click="sort('status')">{{ __('Status') }}</flux:table.column>
@@ -70,6 +89,9 @@ new class extends Component
          <flux:table.rows>
             @foreach ($this->leads as $lead)
                 <flux:table.row>
+                    <flux:table.cell>
+                        <flux:checkbox wire:model="selectedLeads" :value="$lead->id" />
+                    </flux:table.cell>
                     <flux:table.cell>{{ $lead->email }}</flux:table.cell>
                     <flux:table.cell>{{ $lead->website }}</flux:table.cell>
                     <flux:table.cell>{{ $lead->status }}</flux:table.cell>
@@ -83,5 +105,22 @@ new class extends Component
             @endforeach
          </flux:table.rows>
     </flux:table>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div>
+            <flux:select wire:model="status" label="{{__('Status')}}">
+                <flux:select.option value="new">{{ __('New') }}</flux:select.option>
+                <flux:select.option value="traffic">{{ __('Low Traffic') }}</flux:select.option>
+                <flux:select.option value="broken">{{ __('Broken') }}</flux:select.option>
+                <flux:select.option value="inactive">{{ __('Inactive /  Not eligible') }}</flux:select.option>
+                <flux:select.option value="lost">{{ __('No interest') }}</flux:select.option>
+                <flux:select.option value="contacted">{{ __('Contacted') }}</flux:select.option>
+                <flux:select.option value="qualified">{{ __('Interested') }}</flux:select.option>
+        </flux:select>
+        </div>
+        <div>
+            <flux:button type="submit" variant="primary" class="mt-6">{{ __('Update Status') }}</flux:button>
+        </div>
+    </div>
+    </form>
     <flux:toast />
 </div>
