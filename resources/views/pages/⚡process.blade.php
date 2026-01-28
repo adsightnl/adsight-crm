@@ -8,7 +8,8 @@ new class extends Component
 
     public $sortBy = 'email_send';
     public $sortDirection = 'asc';
-    public $page = 0;
+    public $page = 0; // Initialize page variable
+    protected $queryString = ['page']; // Keep current page in the URL
 
     public $email;
     public $website;
