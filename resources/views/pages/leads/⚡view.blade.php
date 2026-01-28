@@ -48,7 +48,7 @@ new class extends Component
     <flux:heading size="xl" class="mt-8">{{ __('Lead :website', ['website' => str_replace(['https://', 'http://', '/', 'www.'], '', $this->website)]) }}</flux:heading>
     <flux:separator class="mb-4" />
     <form wire:submit.prevent="updateLead">
-        <flux:button href="{{ $website }}" variant="primary" class="mb-6" target="_blank">Open Website</flux:button>
+        <flux:button href="{{ $website }}" variant="primary" class="mb-6 bg-green-500 text-white" target="_blank">Open Website</flux:button>
 
         <flux:input wire:model="email" label="{{ __('Email') }}" class="mb-4" />
         <flux:input wire:model="website" label="{{ __('Website') }}" class="mb-4" required />
